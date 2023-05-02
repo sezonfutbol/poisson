@@ -1,0 +1,19 @@
+import math
+
+def poisson_probability(avg_goals, num_goals):
+    return (math.exp(-avg_goals) * avg_goals**num_goals) / math.factorial(num_goals)
+
+def both_teams_score(avg_goals_team1, avg_goals_team2):
+    prob_team1_score = sum(poisson_probability(avg_goals_team1, i) for i in range(1, 8))
+    prob_team2_score = sum(poisson_probability(avg_goals_team2, i) for i in range(1, 8))
+    prob_both_score = prob_team1_score * prob_team2_score
+    return prob_both_score
+
+team1_name = input("Enter the name of team 1: ")
+team2_name = input("Enter the name of team 2: ")
+team1_avg_goals = float(input("Enter the average number of goals scored by team 1: "))
+team2_avg_goals = float(input("Enter the average number of goals scored by team 2: "))
+
+prob_both_score = both_teams_score(team1_avg_goals, team2_avg_goals)
+
+print("The probability that both teams will score in the match between", team1_name, "and", team2_name, "is:", "{:.2%}".format(prob_both_score))
